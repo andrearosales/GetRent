@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background_layout">#ffffff</color>
+    <color name="background_header">#B8D7B5</color>
+    <color name="white">#ffffff</color>
+    <color name="background_button">#419639</color>
+    <color name="background_bottom">#7CB676</color>
+    <color name="black">#000000</color>
+    <color name="background_text">#f3f3f3</color>
+    <color name="background_tab">#969696</color>
+</resources>

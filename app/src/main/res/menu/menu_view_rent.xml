@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.arosales.getrent.ViewRent">
+    <item android:id="@+id/action_home"
+        android:icon="@drawable/ic_action_action_home"
+        android:title="@string/home_icon"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_logout"
+        android:icon="@drawable/ic_action_action_exit_to_app"
+        android:title="@string/logout_icon"
+        app:showAsAction="ifRoom"/>
+</menu>

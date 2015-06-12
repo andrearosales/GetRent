@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">GetRent</string>
+    <string name="title_activity_log_in">Sign In</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="login">Log In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="register_here">Register Here</string>
+    <string name="home_icon">Home</string>
+    <string name="book_icon">Bookmarks</string>
+    <string name="search_icon">Search</string>
+    <string name="logout_icon">Log out</string>
+    <string name="title_activity_registration">Registration</string>
+    <string name="registration">Registration</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="register">Register</string>
+    <string name="phone">Telephone</string>
+
+    <string name="title_activity_list_rent">My Rents</string>
+    <string name="no_rents">You haven\'t published any rent yet</string>
+    <string name="publish_rent">Publish New Rent</string>
+    <string name="title_activity_create_rent">Create Rent</string>
+    <string name="type">Type</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
+    <string name="location_hint">Complete address</string>
+    <string name="cost">Cost</string>
+    <string name="size">Size (m2)</string>
+    <string name="tags">Tags</string>
+    <string name="upload_photos">Upload photos here</string>
+    <string name="uploaded_photos">View photos here</string>
+    <string name="publish_button">Publish</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="tag_hints">E.g: studio apartment, two-room, ..</string>
+    <string name="title_activity_view_rent">Rent Description</string>
+    <string name="edit_button">Edit</string>
+    <string name="delete_button">Delete</string>
+    <string name="goBack_button">Go Back</string>
+    <string name="title_activity_list_bookmark">My Bookmarks</string>
+    <string name="no_bookmarks">You have no bookmarks yet</string>
+    <string name="title_activity_search_rents">Search Rents</string>
+    <string name="close_to">Close to</string>
+    <string name="category">Category</string>
+    <string name="search_button">Search</string>
+    <string name="title_activity_rent_description">Rent Description</string>
+    <string name="contact_button">Contact Owner</string>
+    <string name="bookmark_button">Bookmark</string>
+    <string name="unbookmark_button">Unbookmark</string>
+    <string name="flag_button">Flag as Inadequate</string>
+    <string name="title_activity_search_results">Search Results</string>
+    <string name="no_results">No results found</string>
+    <string name="sort">Sort by</string>
+    <string name="error_intro">Missing fields: </string>
+    <string name="error_blank_username">Enter a username</string>
+    <string name="error_join">, and </string>
+    <string name="error_blank_password">Enter a password</string>
+    <string name="error_end">.</string>
+    <string name="error_blank_name">Enter a name</string>
+    <string name="error_blank_surname">Enter a surname</string>
+    <string name="error_blank_contact">Enter an email or a phone number</string>
+    <string name="title_activity_username">Your username is</string>
+    <string name="addedBookmarkMessage">The bookmark was added</string>
+    <string name="existingBookmarkMessage">The bookmarks already exists</string>
+    <string name="removedBookmarkMessage">The bookmark has been removed</string>
+    <string name="inadequate_rent_message">The rent has been marked as inadequate</string>
+    <string name="error_invalid_rent_type">Select a rent type</string>
+    <string name="error_invalid_location">Insert a location</string>
+    <string name="error_invalid_cost">Insert a price</string>
+    <string name="error_invalid_size">Insert a size</string>
+    <string name="publication_progress">Upload in progress</string>
+    <string name="publish_rent_message">Saving rent. Please wait..</string>
+    <string name="select_contact">Select the type of contact</string>
+    <string name="call_owner">Call</string>
+    <string name="email_owner">Email</string>
+    <string name="title_activity_list_photos">Photos</string>
+    <string name="title_activity_tab_list">List Results</string>
+    <string name="title_activity_tab_map">Map Results</string>
+    <string name="save_button">Save</string>
+    <string name="no_photos">You haven\'t published any photo for this rent</string>
+    <string-array name="arrayPrice">
+        <item>Maximum price</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+    </string-array>
+    <string-array name="arraySort">
+        <item>Price</item>
+        <item>Size</item>
+        <item>Date</item>
+    </string-array>
+    <string-array name="arrayType">
+        <item>-</item>
+        <item>Room</item>
+        <item>Apartment</item>
+    </string-array>
+    <string-array name="arraySize">
+        <item>Minimum size</item>
+        <item>0</item>
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+        <item>250</item>
+    </string-array>
+    <string-array name="tabNames">
+        <item name="student">Student</item>
+        <item name="owner">Owner</item>
+    </string-array>
+
+</resources>

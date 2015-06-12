@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.arosales.getrent" >
+
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/CustomActionBarTheme" >
+        <activity
+            android:name=".ManageSession"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <meta-data
+                android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_ENABLED"
+                android:value="true"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LogIn"
+            android:label="@string/title_activity_log_in"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".Registration"
+            android:label="@string/title_activity_registration"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".ListBookmark"
+            android:label="@string/title_activity_list_bookmark" >
+        </activity>
+        <activity
+            android:name=".SearchRents"
+            android:label="@string/title_activity_search_rents"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".SearchResults"
+            android:label="@string/title_activity_search_results" >
+        </activity>
+        <activity
+            android:name=".RentDescription"
+            android:label="@string/title_activity_rent_description" >
+        </activity>
+        <activity
+            android:name=".ListRent"
+            android:label="@string/title_activity_list_rent" >
+        </activity>
+        <activity
+            android:name=".CreateRent"
+            android:label="@string/title_activity_create_rent"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".ViewRent"
+            android:label="@string/title_activity_view_rent"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".ListPhotos"
+            android:label="@string/title_activity_list_photos" >
+        </activity>
+        <activity
+            android:name=".TabList"
+            android:label="@string/title_activity_tab_list" >
+        </activity>
+        <activity
+            android:name=".TabMap"
+            android:label="@string/title_activity_tab_map" >
+        </activity>
+    </application>
+
+</manifest>

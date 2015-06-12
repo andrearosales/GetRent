@@ -1,0 +1,81 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="CustomActionBarTheme"
+        parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:itemBackground">@drawable/overflow_style</item>
+        <item name="android:actionMenuTextAppearance">@style/TextColor</item>
+        <item name="android:actionBarWidgetTheme">@style/PopUpStyle</item>
+        <item name="android:displayOptions">useLogo|showTitle</item>
+
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarTabTextStyle">@style/TabTextStyle</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextAppearance">@style/TextColor</item>
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="displayOptions">useLogo|showTitle</item>
+    </style>
+
+    <style name="ActionBarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <!-- title text color -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- subtitle text color -->
+        <item name="android:textColorSecondary">@color/white</item>
+        <!-- action menu item text color -->
+        <item name="actionMenuTextColor">@color/white</item>
+        <!-- action menu item icon color - only applies to appcompat-v7 icons :( -->
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <!-- general styles for the action bar -->
+    <style name="MyActionBar"
+        parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:titleTextStyle">@style/TitleTextStyle</item>
+        <item name="android:background">@color/background_header</item>
+        <item name="android:backgroundStacked">@color/background_header</item>
+        <item name="android:backgroundSplit">@color/background_header</item>
+        <item name="android:displayOptions">useLogo|showTitle</item>
+
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/TitleTextStyle</item>
+        <item name="background">@color/background_header</item>
+        <item name="backgroundStacked">@color/background_header</item>
+        <item name="backgroundSplit">@color/background_header</item>
+        <item name="displayOptions">useLogo|showTitle</item>
+    </style>
+
+    <!-- action bar title text -->
+    <style name="TitleTextStyle"
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- action bar tab text -->
+    <style name="TabTextStyle"
+        parent="@style/Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="PopUpStyle" parent="Theme.AppCompat">
+        <item name="android:popupMenuStyle">@style/PopUpMenu</item>
+    </style>
+
+    <style name="PopUpMenu" parent="@style/Widget.AppCompat.Light.PopupMenu">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAppearanceLargePopupMenu">@color/white</item>
+        <item name="android:textAppearanceSmallPopupMenu">@color/white</item>
+    </style>
+
+</resources>
