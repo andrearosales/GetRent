@@ -186,23 +186,18 @@
                         android:hint="@string/tag_hints"/>
                 </TableRow>
 
-                <TableRow android:layout_marginTop="@dimen/margin_top">
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_top">
 
-                    <TextView
-                        android:id="@+id/rentSavedPhotos"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:paddingLeft="@dimen/padding_left"
-                        android:text="@string/uploaded_photos"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size"
-                        android:clickable="true"
-                        android:onClick="viewPhotos"/>
-
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/image_height"
+                        android:id="@+id/rentImage"
+                        android:layout_span="6"
+                        android:layout_marginLeft="@dimen/padding_left"
+                        android:layout_marginRight="@dimen/padding_left"/>
                 </TableRow>
 
                 <TableRow android:layout_marginTop="@dimen/margin_top">

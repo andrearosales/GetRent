@@ -204,6 +204,19 @@
 
                 </TableRow>
 
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/image_height"
+                    android:id="@+id/rentImage"
+                    android:layout_span="6"
+                    android:layout_marginLeft="@dimen/padding_left"
+                    android:layout_marginRight="@dimen/padding_left"/>
+                </TableRow>
+
             </TableLayout>
 
             <Button

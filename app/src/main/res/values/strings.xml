@@ -30,8 +30,8 @@
     <string name="cost">Cost</string>
     <string name="size">Size (m2)</string>
     <string name="tags">Tags</string>
-    <string name="upload_photos">Upload photos here</string>
-    <string name="uploaded_photos">View photos here</string>
+    <string name="upload_photos">Upload photo here</string>
+    <string name="uploaded_photos">View photo here</string>
     <string name="publish_button">Publish</string>
     <string name="cancel_button">Cancel</string>
     <string name="tag_hints">E.g: studio apartment, two-room, ..</string>
@@ -116,5 +116,7 @@
         <item name="student">Student</item>
         <item name="owner">Owner</item>
     </string-array>
+    <string name="title_activity_test_map">TestMap</string>
+    <string name="error_wrong_location">Insert a valid location</string>
 
 </resources>

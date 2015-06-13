@@ -19,7 +19,7 @@ public class Rent implements Serializable{
     Double cost;
     Double size;
     ArrayList<String> tags;
-    ArrayList<ParseFile> photos;
+    ParseFile photos;
     boolean inadequate;
 
     public String getId() {
@@ -86,11 +86,11 @@ public class Rent implements Serializable{
         this.tags = tags;
     }
 
-    public ArrayList<ParseFile> getPhotos() {
+    public ParseFile getPhotos() {
         return photos;
     }
 
-    public void setPhotos(ArrayList<ParseFile> photos) {
+    public void setPhotos(ParseFile photos) {
         this.photos = photos;
     }
 

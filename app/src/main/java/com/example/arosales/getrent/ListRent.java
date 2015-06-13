@@ -108,14 +108,12 @@ public class ListRent extends AppCompatActivity {
                 List<ParseObject> results=query.find();
                 for(ParseObject p:results){
                     Rent rent = new Rent();
-                    rent.setId(p.getObjectId());
+                    rent.setId(p.getObjectId().toString());
                     rent.setType(p.getString("Type"));
                     if(p.getString("Description")!=null)
                         rent.setDescription(p.getString("Description"));
                     rent.setLocation(p.getString("Location"));
-                    //TODO
-                    //Modify remove or leave Geopoints in parse
-                    //rent.setPoint(p.getParseGeoPoint("Point"));
+                    rent.setPoint(p.getParseGeoPoint("Point"));
                     rent.setCost(p.getDouble("Cost"));
                     rent.setSize(p.getDouble("Size"));
                     if(p.get("Tags")!=null){
@@ -123,7 +121,8 @@ public class ListRent extends AppCompatActivity {
                         rent.setTags(tags);
                     }
                     if(p.get("Photos")!=null){
-                        ArrayList<ParseFile> photos = (ArrayList<ParseFile>)p.get("Photos");
+                        //ArrayList<ParseFile> photos = (ArrayList<ParseFile>)p.get("Photos");
+                        ParseFile photos = (ParseFile) p.get("Photos");
                         rent.setPhotos(photos);
                     }
                     rent.setInadequate(p.getBoolean("Inadequate"));
