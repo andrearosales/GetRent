@@ -97,7 +97,7 @@ public class RentAdapter extends BaseAdapter{
                         if (searchType.equals("Bookmarks") || searchType.equals("Search")) {
                             Intent intent = new Intent(activity, RentDescription.class);
                             intent.putExtra(SEARCH_TYPE, searchType);
-                            intent.putExtra(RENT, listRents.get(position));
+                            intent.putExtra(RENT, listRents.get(position).getId());
                             activity.startActivity(intent);
                         } else if (searchType.equals("Owner")) {
                             Intent intent = new Intent(activity, ViewRent.class);

@@ -1,6 +1,8 @@
 package com.example.arosales.getrent;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +13,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,11 +120,31 @@ public class SearchRents extends AppCompatActivity {
         Spinner category = (Spinner) findViewById(R.id.spinnerCategory);
         Spinner price = (Spinner) findViewById(R.id.spinnerCost);
         Spinner size = (Spinner) findViewById(R.id.spinnerSize);
-
+        boolean validationError = false;
+        StringBuilder validationErrorMessage = new StringBuilder(getResources().getString(R.string.error_intro)+"\n");
         search_filters.put(INFO_SEARCHTYPE,"Search");
 
         if(!locationFilter.getText().toString().equals("")){
-            search_filters.put(INFO_LOCATION, locationFilter.getText().toString().toLowerCase());
+            Geocoder geocoder = new Geocoder(SearchRents.this);
+            List<Address> addresses;
+            try {
+                addresses = geocoder.getFromLocationName(locationFilter.getText().toString(), 1);
+                if(addresses.size() > 0) {
+                    search_filters.put(INFO_LOCATION, locationFilter.getText().toString().toLowerCase());
+                }
+                else {
+                    validationError = true;
+                    validationErrorMessage.append(getResources().getString(R.string.error_wrong_location));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if (validationError) {
+            Toast.makeText(SearchRents.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
+                    .show();
+            return;
         }
 
         if(!category.getSelectedItem().toString().equals("-")){

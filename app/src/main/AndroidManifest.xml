@@ -86,10 +86,6 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name=".ListPhotos"
-            android:label="@string/title_activity_list_photos" >
-        </activity>
-        <activity
             android:name=".TabList"
             android:label="@string/title_activity_tab_list" >
         </activity>

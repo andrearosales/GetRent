@@ -92,6 +92,7 @@ public class ViewRent extends AppCompatActivity {
         sizeView = (EditText) findViewById(R.id.textSize);
         tagsView = (EditText) findViewById(R.id.textTags);
         typeView = (Spinner) findViewById(R.id.spinnerType);
+        image = (ImageView) findViewById(R.id.rentImage);
 
         adapterType = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.arrayType));
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -519,12 +520,6 @@ public class ViewRent extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void viewPhotos(View view) {
-        Intent intent = new Intent(this, ListPhotos.class);
-        intent.putExtra(RentAdapter.RENT, rentId);
-        startActivity(intent);
-    }
-
     public void uploadPhotos(View view) {
         //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -592,36 +587,13 @@ public class ViewRent extends AppCompatActivity {
                     //bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
                     //byte[] imageData = baos.toByteArray();
                     //photosBitmap.add(imageData);
-
+                    image = (ImageView) findViewById(R.id.rentImage);
+                    image.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                image.setImageBitmap(bitmap);
-                /*try {
-                    ExifInterface exif = new ExifInterface(mCurrentPhotoPath);
-                    byte[] imageData = exif.getThumbnail();
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-                    ExifInterface ei = new ExifInterface(mCurrentPhotoPath);
-                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    Matrix matrix = new Matrix();
-                    switch (orientation) {
-                        case ExifInterface.ORIENTATION_ROTATE_90:
-                            matrix.postRotate(90);
-                            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                            break;
-                        case ExifInterface.ORIENTATION_ROTATE_180:
-                            matrix.postRotate(180);
-                            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                            break;
-                    }
-                    bitmapList.add(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
-
-
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

@@ -103,31 +103,35 @@ public class ListBookmark extends AppCompatActivity {
             ArrayList<Rent> result_rents=new ArrayList<Rent>();
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Bookmark");
             query.include("StudentId");
+            query.include("RentId");
             query.whereEqualTo("StudentId", params[0]);
-            query.whereEqualTo("Inadequate", false);
+            //query.whereEqualTo("Inadequate", false);
             try {
                 List<ParseObject> results=query.find();
                 for(ParseObject p:results){
-                    Rent rent = new Rent();
-                    rent.setId(p.getObjectId());
-                    rent.setType(p.getString("Type"));
-                    if(p.getString("Description")!=null)
-                        rent.setDescription(p.getString("Description"));
-                    rent.setLocation(p.getString("Location"));
-                    rent.setPoint(p.getParseGeoPoint("Point"));
-                    rent.setCost(p.getDouble("Cost"));
-                    rent.setSize(p.getDouble("Size"));
-                    if(p.get("Tags")!=null){
-                        ArrayList<String> tags = (ArrayList<String>)p.get("Tags");
-                        rent.setTags(tags);
+                    ParseObject resultRent = p.getParseObject("RentId");
+                    if(!resultRent.getBoolean("Inadequate")) {
+                        Rent rent = new Rent();
+                        rent.setId(resultRent.getObjectId());
+                        rent.setType(resultRent.getString("Type"));
+                        if (resultRent.getString("Description") != null)
+                            rent.setDescription(resultRent.getString("Description"));
+                        rent.setLocation(resultRent.getString("Location"));
+                        rent.setPoint(resultRent.getParseGeoPoint("Point"));
+                        rent.setCost(resultRent.getDouble("Cost"));
+                        rent.setSize(resultRent.getDouble("Size"));
+                        if (resultRent.get("Tags") != null) {
+                            ArrayList<String> tags = (ArrayList<String>) resultRent.get("Tags");
+                            rent.setTags(tags);
+                        }
+                        if (resultRent.get("Photos") != null) {
+                            //ArrayList<ParseFile> photos = (ArrayList<ParseFile>)p.get("Photos");
+                            ParseFile photos = (ParseFile) resultRent.get("Photos");
+                            rent.setPhotos(photos);
+                        }
+                        rent.setInadequate(resultRent.getBoolean("Inadequate"));
+                        result_rents.add(rent);
                     }
-                    if(p.get("Photos")!=null){
-                        //ArrayList<ParseFile> photos = (ArrayList<ParseFile>)p.get("Photos");
-                        ParseFile photos = (ParseFile) p.get("Photos");
-                        rent.setPhotos(photos);
-                    }
-                    rent.setInadequate(p.getBoolean("Inadequate"));
-                    result_rents.add(rent);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
