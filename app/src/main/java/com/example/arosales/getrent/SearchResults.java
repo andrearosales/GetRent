@@ -1,8 +1,6 @@
 package com.example.arosales.getrent;
 
-import android.app.ActivityGroup;
 import android.app.ProgressDialog;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -23,8 +21,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -34,16 +36,17 @@ import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 
-public class SearchResults extends AppCompatActivity {
+public class SearchResults extends AppCompatActivity implements OnMapReadyCallback {
 
     private TabHost tabHost;
     public static HashMap<String, String> hash;
+    public static ArrayList<Rent> list;
+    public boolean firstTab1;
+    public boolean firstTab2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,8 @@ public class SearchResults extends AppCompatActivity {
 
         tabHost= (TabHost) findViewById(R.id.tabHostResults);
         tabHost.setup();
-
+        firstTab1 = true;
+        firstTab2 = true;
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
         hash = (HashMap<String, String>) b.getSerializable(SearchRents.INFO_HASH);
@@ -73,9 +77,18 @@ public class SearchResults extends AppCompatActivity {
             public void onTabChanged(String arg0) {
                 Log.i("***Selected Tab", "Im currently in tab with index::" + tabHost.getCurrentTab());
                 if (tabHost.getCurrentTab() == 0) {
-                    new RetrieveFromDatabase().execute(hash);
+                    //new RetrieveFromDatabase().execute(hash);
+                    if(firstTab1) {
+                        loadList();
+                        firstTab1 =false;
+                    }
                 } else {
-
+                    //new RetrieveFromDatabaseMap().execute(hash);
+                    if(firstTab2) {
+                        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.tab2);
+                        mapFragment.getMapAsync(SearchResults.this);
+                        firstTab2=false;
+                    }
                 }
             }
         });
@@ -272,6 +285,8 @@ public class SearchResults extends AppCompatActivity {
                 progressDialog.dismiss();
             }
 
+            SearchResults.list = rents;
+
             final RentAdapter rAdapter = new RentAdapter(SearchResults.this, rents, "Search");
 
             ListView list_rents = (ListView) findViewById(R.id.listResult);
@@ -342,8 +357,92 @@ public class SearchResults extends AppCompatActivity {
             list_rents.setAdapter(rAdapter);
             list_rents.setEmptyView(findViewById(R.id.emptyView));
 
+            firstTab1=false;
 
         }
     }
 
+    @Override
+    public void onMapReady(GoogleMap map) {
+        //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        for(int i=0; i< list.size();i++){
+            map.addMarker(new MarkerOptions()
+                .position(new LatLng(list.get(i).getPoint().getLatitude(), list.get(i).getPoint().getLongitude()))
+                .title(list.get(i).getType())
+                .snippet("Price: "+ list.get(i).getCost()+"\nSize (m2): "+ list.get(i).getSize()));
+
+        }
+    }
+
+    public void loadList(){
+        final RentAdapter rAdapter = new RentAdapter(SearchResults.this, list, "Search");
+
+        ListView list_rents = (ListView) findViewById(R.id.listResult);
+
+        Button newSearchButton = new Button(SearchResults.this);
+
+        Drawable background = getResources().getDrawable(R.drawable.background_color);
+
+        if (android.os.Build.VERSION.SDK_INT >= 16)
+            newSearchButton.setBackground(background);
+        else
+            newSearchButton.setBackgroundDrawable(background);
+
+
+        newSearchButton.setHeight(getResources().getDimensionPixelSize(R.dimen.button_height));
+        newSearchButton.setWidth(getResources().getDimensionPixelSize(R.dimen.width_buttons));
+        newSearchButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.text_size));
+        newSearchButton.setTextColor(Color.WHITE);
+        newSearchButton.setTypeface(null, Typeface.BOLD);
+        newSearchButton.setText(R.string.new_search_button);
+
+        newSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchResults.this, SearchRents.class);
+                startActivity(intent);
+            }
+        });
+
+        list_rents.addFooterView(newSearchButton);
+
+        Spinner sort = new Spinner(SearchResults.this);
+        ArrayAdapter<String> adapterSort = new ArrayAdapter<String>(SearchResults.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.arraySort));
+        adapterSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sort.setAdapter(adapterSort);
+
+        sort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position==1){
+                    rAdapter.sortPriceMinMax();
+                }
+                else if(position==2){
+                    rAdapter.sortPriceMaxMin();
+                }
+                else if(position==3){
+                    rAdapter.sortSizeMinMax();
+                }
+                else if(position==4){
+                    rAdapter.sortSizeMaxMin();
+                }
+                else if(position==5){
+                    rAdapter.sortDateNewOld();
+                }
+                else if(position==6){
+                    rAdapter.sortDateOldNew();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        list_rents.addHeaderView(sort);
+
+        list_rents.setAdapter(rAdapter);
+        list_rents.setEmptyView(findViewById(R.id.emptyView));
+    }
 }
