@@ -72,6 +72,7 @@
     <string name="error_invalid_size">Insert a size</string>
     <string name="publication_progress">Upload in progress</string>
     <string name="publish_rent_message">Saving rent. Please wait..</string>
+    <string name="error_wrong_location">Insert a valid location</string>
     <string name="select_contact">Select the type of contact</string>
     <string name="call_owner">Call</string>
     <string name="email_owner">Email</string>
@@ -94,9 +95,13 @@
         <item>1000</item>
     </string-array>
     <string-array name="arraySort">
-        <item>Price</item>
-        <item>Size</item>
-        <item>Date</item>
+        <item>-</item>
+        <item>Price: min-max</item>
+        <item>Price: max-min</item>
+        <item>Size: min-max</item>
+        <item>Size: max-min</item>
+        <item>Date: new-old</item>
+        <item>Date: old-new</item>
     </string-array>
     <string-array name="arrayType">
         <item>-</item>
@@ -116,7 +121,11 @@
         <item name="student">Student</item>
         <item name="owner">Owner</item>
     </string-array>
+    <string-array name="tabSearchNames">
+        <item name="list">List</item>
+        <item name="map">Map</item>
+    </string-array>
     <string name="title_activity_test_map">TestMap</string>
-    <string name="error_wrong_location">Insert a valid location</string>
+    <string name="new_search_button">New Search</string>
 
 </resources>

@@ -5,8 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +34,8 @@ public class RentDescription extends ActionBarActivity {
 
     private String rentId;
     private String descriptionType;
+    public static HashMap<String, String> hash;
+    public final static String INFO_HASH = "com.example.arosales.arosales.HASH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,10 @@ public class RentDescription extends ActionBarActivity {
         Intent intent = getIntent();
         rentId = (String) intent.getStringExtra(RentAdapter.RENT);
         descriptionType = intent.getStringExtra(RentAdapter.SEARCH_TYPE);
+        if(descriptionType.equals("Search")) {
+            Bundle b = intent.getExtras();
+            hash = (HashMap<String, String>) b.getSerializable(SearchRents.INFO_HASH);
+        }
 
         TextView typeView = (TextView) findViewById(R.id.rentType);
         TextView descriptionView = (TextView) findViewById(R.id.rentDescription);
@@ -50,6 +59,7 @@ public class RentDescription extends ActionBarActivity {
         ImageView image = (ImageView) findViewById(R.id.rentImage);
 
         ParseQuery rentQuery = new ParseQuery("Rent");
+        rentQuery.include("OwnerId");
         rentQuery.whereEqualTo("objectId", rentId);
         try {
             ParseObject receivedRent = rentQuery.getFirst();
@@ -61,7 +71,7 @@ public class RentDescription extends ActionBarActivity {
             sizeView.setText(sizeView.getText().toString()+": "+receivedRent.getNumber("Size").toString());
             if (receivedRent.get("Tags") != null) {
                 ArrayList<String> tags = (ArrayList<String>) receivedRent.get("Tags");
-                tagsView.setText(tagsView.getText().toString()+"\n");
+                tagsView.setText(tagsView.getText().toString() + "\n");
                 if(tags.size()>0)
                     tagsView.setText(tags.toString().substring(1, tags.toString().length() - 1));
             }
@@ -70,6 +80,21 @@ public class RentDescription extends ActionBarActivity {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(photo.getData(), 0, photo.getData().length);;
                 image = (ImageView) findViewById(R.id.rentImage);
                 image.setImageBitmap(bitmap);
+            }
+            ParseObject owner = receivedRent.getParseObject("OwnerId");
+            if(owner.getString("Telephone")!=null){
+                TextView phoneNumber = (TextView) findViewById(R.id.phoneNumber);
+                SpannableString content = new SpannableString(owner.getString("Telephone").toString());
+                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                phoneNumber.setText(content);
+                //phoneNumber.setText(owner.getString("Telephone").toString());
+            }
+            if(owner.getString("Email")!=null){
+                TextView emailOwner = (TextView) findViewById(R.id.emailOwner);
+                SpannableString content = new SpannableString(owner.getString("Email").toString());
+                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                emailOwner.setText(content);
+                //emailOwner.setText(owner.getString("Email").toString());
             }
 
         } catch (ParseException e) {
@@ -175,7 +200,69 @@ public class RentDescription extends ActionBarActivity {
 
             }
 
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void dialPhoneNumber(View view) {
+        TextView phoneNumber = (TextView) findViewById(R.id.phoneNumber);
+        if(phoneNumber.getText()!=null) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + phoneNumber.getText().toString()));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        }
+    }
+    public void sendEmail(View view) {
+        TextView email = (TextView) findViewById(R.id.emailOwner);
+        TextView type = (TextView) findViewById(R.id.rentType);
+        String subject = "Contact for rent: "+type.getText().toString();
+        if(email.getText()!=null) {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:" + email.getText().toString()));
+            //intent.putExtra(Intent.EXTRA_EMAIL, email.getText().toString());
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        }
+    }
+
+    public void flagInadequate(View view) {
+        try {
+            ParseQuery<ParseObject> queryRent = ParseQuery.getQuery("Rent");
+            queryRent.whereEqualTo("objectId", rentId);
+            ParseObject rent = queryRent.getFirst();
+            if (descriptionType.equals("Search")) {
+                rent.put("Inadequate", true);
+                rent.save();
+                Intent intent = new Intent(this, SearchResults.class);
+                Bundle b = new Bundle();
+                b.putSerializable(INFO_HASH,hash);
+                intent.putExtras(b);
+                startActivity(intent);
+            } else {
+
+                ParseQuery<ParseObject> queryStudent = ParseQuery.getQuery("Student");
+                queryStudent.include("StudentId");
+                queryStudent.whereEqualTo("StudentId", ParseUser.getCurrentUser());
+
+                ParseObject student = queryStudent.getFirst();
+
+                ParseQuery<ParseObject> queryBookmark = ParseQuery.getQuery("Bookmark");
+                queryBookmark.whereEqualTo("StudentId", student);
+                queryBookmark.whereEqualTo("RentId", rent);
+
+                rent.put("Inadequate", true);
+                rent.saveInBackground();
+
+                queryBookmark.getFirst().deleteInBackground();
+                Intent intent = new Intent(this, ListBookmark.class);
+                startActivity(intent);
+
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();

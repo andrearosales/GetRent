@@ -134,32 +134,68 @@
                         android:layout_marginRight="@dimen/padding_left"/>
                 </TableRow>
 
-            </TableLayout>
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_top">
+                    <TextView
+                        android:id="@+id/contact_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:paddingLeft="@dimen/padding_left"
+                        android:text="@string/contact_button"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/phoneNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:layout_marginLeft="@dimen/margin_top_title"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="italic"
+                        android:clickable="true"
+                        android:onClick="dialPhoneNumber"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/emailOwner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:layout_marginLeft="@dimen/margin_top_title"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="italic"
+                        android:clickable="true"
+                        android:onClick="sendEmail"/>
+                </TableRow>
 
-            <Button
-                android:id="@+id/contactButton"
-                android:layout_width="@dimen/width_buttons"
-                android:layout_height="@dimen/button_height"
-                android:layout_below="@+id/table"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_top"
-                android:background="@drawable/background_color"
-                android:onClick="contactOwner"
-                android:text="@string/contact_button"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold" />
+            </TableLayout>
 
             <Button
                 android:id="@+id/BookmarkButton"
                 android:layout_width="@dimen/width_buttons"
                 android:layout_height="@dimen/button_height"
-                android:layout_below="@+id/contactButton"
+                android:layout_below="@+id/table"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/background_color"
-                android:layout_marginTop="@dimen/margin_top"
+                android:layout_marginTop="@dimen/margin_top_title"
                 android:onClick="bookmarkRent"
                 android:text="@string/bookmark_button"
                 android:textColor="@color/white"

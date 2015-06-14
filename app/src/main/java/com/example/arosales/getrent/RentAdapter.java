@@ -27,6 +27,7 @@ import java.util.List;
 public class RentAdapter extends BaseAdapter{
     public static final String RENT = "com.example.arosales.getrent.RENT";
     public static final String SEARCH_TYPE = "com.example.arosales.getrent.SEARCH_TYPE";
+    public final static String INFO_HASH = "com.example.arosales.arosales.HASH";
 
     private LayoutInflater inflater;
     private Activity activity;
@@ -98,6 +99,11 @@ public class RentAdapter extends BaseAdapter{
                             Intent intent = new Intent(activity, RentDescription.class);
                             intent.putExtra(SEARCH_TYPE, searchType);
                             intent.putExtra(RENT, listRents.get(position).getId());
+                            if(searchType.equals("Search")){
+                                Bundle b = new Bundle();
+                                b.putSerializable(INFO_HASH,SearchResults.hash);
+                                intent.putExtras(b);
+                            }
                             activity.startActivity(intent);
                         } else if (searchType.equals("Owner")) {
                             Intent intent = new Intent(activity, ViewRent.class);
