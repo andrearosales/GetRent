@@ -110,7 +110,6 @@ public class RentAdapter extends BaseAdapter{
                         } else if (searchType.equals("Owner")) {
                             Intent intent = new Intent(activity, ViewRent.class);
                             intent.putExtra(SEARCH_TYPE, searchType);
-                            //intent.putExtra(RENT, listRents.get(position));
                             intent.putExtra(RENT, listRents.get(position).getId());
                             activity.startActivity(intent);
                         }
@@ -233,7 +232,6 @@ public class RentAdapter extends BaseAdapter{
     public void sortDateNewOld() {
         for(int i=0;i<listRents.size()-1;i++){
             for(int j=i+1;j<listRents.size();j++){
-                //if(listRents.get(i).getSize()>listRents.get(j).getSize()){
                 if(listRents.get(i).getCreatedAt().before(listRents.get(j).getCreatedAt())){
                     Rent aux = new Rent();
                     aux.setId(listRents.get(i).getId());
@@ -259,7 +257,6 @@ public class RentAdapter extends BaseAdapter{
     public void sortDateOldNew() {
         for(int i=0;i<listRents.size()-1;i++){
             for(int j=i+1;j<listRents.size();j++){
-                //if(listRents.get(i).getSize()>listRents.get(j).getSize()){
                 if(listRents.get(i).getCreatedAt().after(listRents.get(j).getCreatedAt())){
                     Rent aux = new Rent();
                     aux.setId(listRents.get(i).getId());

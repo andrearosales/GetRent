@@ -60,10 +60,6 @@ public class CreateRent extends AppCompatActivity {
     private static final int REQUEST_IMAGE_GET = 1;
 
     private ArrayAdapter<String> adapterType;
-    //private List<ParseFile> photos;
-    //private ArrayList<String> paths;
-    //private ArrayList<byte[]> photosBitmap;
-    //private ArrayList<Bitmap> bitmapList;
     private ImageView image;
     private String path = "";
     private Bitmap bitmap;
@@ -173,7 +169,7 @@ public class CreateRent extends AppCompatActivity {
         EditText tags = (EditText) findViewById(R.id.textTags);
         ParseGeoPoint geoPoint = null;
 
-        // Validate the sign up data
+        // Validate the inserted data
         boolean validationError = false;
         StringBuilder validationErrorMessage = new StringBuilder(getResources().getString(R.string.error_intro)+"\n");
         if (type.getSelectedItem().toString().equals("-")) {
@@ -278,31 +274,7 @@ public class CreateRent extends AppCompatActivity {
                 });
             }
 
-            /*if(paths!=null && paths.size()>0){
-                createPhotoFiles();
-                rent.put("Photos", photos);
-            }*/
-
-            /*if(photosBitmap!=null && photosBitmap.size()>0){
-                createPhotoFiles();
-                rent.put("Photos", photos);
-            }*/
-
-            /*if(bitmapList!=null && bitmapList.size()>0){
-                createPhotoFiles();
-                rent.put("Photos", photos);
-            }*/
-
             if(bitmap!=null) {
-                /*String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName = "JPEG_" + timeStamp + "_";
-                File storageDir = Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES);
-                File image = File.createTempFile(imageFileName,".jpg",storageDir);
-
-                // Save a file: path for use with ACTION_VIEW intents
-                path = "file:" + image.getAbsolutePath();*/
-
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
                 byte[] imageData = baos.toByteArray();
@@ -321,9 +293,6 @@ public class CreateRent extends AppCompatActivity {
                     dlg.dismiss();
                 }
             });
-            //rent.save();
-            //Log.d("Save", "It saved");
-            //rent.save();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -331,65 +300,12 @@ public class CreateRent extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void createPhotoFiles() {
-        //try
-        //{
-            //photos = new ArrayList<>();
-            //for(int i=0;i<photosBitmap.size();i++){
-            //for(int i=0;i<paths.size();i++){
-            //for(int i=0;i<bitmapList.size();i++){
-                //To get filename
-                //File file= new File(paths.get(i));
-                /*String fileName = paths.get(i).substring(paths.get(i).lastIndexOf("/") + 1);
-                final int THUMBNAIL_SIZE = 64;
-
-                FileInputStream fis = new FileInputStream(fileName);
-                Bitmap imageBitmap = BitmapFactory.decodeStream(fis);
-
-                imageBitmap = Bitmap.createScaledBitmap(imageBitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
-
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] imageData = baos.toByteArray();*/
-                // Create the ParseFile and Upload the image into Parse Cloud
-                //final ParseFile parseFile = new ParseFile(fileName, imageData);
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                // Compress image to lower quality scale 1 - 100
-                //Bitmap bitmap = bitmapList.get(i);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] image = stream.toByteArray();
-
-                //final String filename = "Image"+i+".JPEG";
-                //final ParseFile parseFile = new ParseFile(filename, photosBitmap.get(i));
-                //final ParseFile parseFile = new ParseFile(filename, image);
-                /*parseFile.saveInBackground(new SaveCallback() {
-                    public void done(ParseException e) {
-                        // If successful add file to user and signUpInBackground
-                        if (null == e)
-                            Log.d("File stored ", filename);
-                            photos.add(parseFile);
-                    }
-                });*/
-                //parseFile.save();
-                //Log.d("File stored ", filename);
-                //
-            /*}
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-    }
-
     public void cancel(View view){
         finish();
     }
 
     public void uploadPhotos(View view) {
-        //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //intent.setType("image/*");
-        //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_IMAGE_GET);
         }
@@ -398,9 +314,6 @@ public class CreateRent extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK){
-            //paths = new ArrayList<>();
-            //photosBitmap = new ArrayList<>();
-            //bitmapList = new ArrayList<>();
             if(data.getData() != null){
                 Uri selectedImage = data.getData();
 
@@ -413,12 +326,6 @@ public class CreateRent extends AppCompatActivity {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 path = cursor.getString(columnIndex);
                 cursor.close();
-
-                //String path = getRealPathFromURI(selectedImage);
-                /*
-                if(path==null)
-                    path=selectedImage.getPath();
-                paths.add(path);*/
                 Log.d("Selected image ", "Only one selected image");
                 final int THUMBNAIL_SIZE = 64;
 
@@ -427,10 +334,6 @@ public class CreateRent extends AppCompatActivity {
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
                     bitmap = Bitmap.createScaledBitmap(bitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
-
-                    ExifInterface exif = new ExifInterface(path);
-                    //byte[] imageData = exif.getThumbnail();
-                    //bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
 
                     ExifInterface ei = new ExifInterface(path);
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
@@ -447,63 +350,15 @@ public class CreateRent extends AppCompatActivity {
                             break;
                     }
 
-
-                    //ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    //bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
-                    //byte[] imageData = baos.toByteArray();
-                    //photosBitmap.add(imageData);
-
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 image.setImageBitmap(bitmap);
-                /*try {
-                    ExifInterface exif = new ExifInterface(mCurrentPhotoPath);
-                    byte[] imageData = exif.getThumbnail();
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-                    ExifInterface ei = new ExifInterface(mCurrentPhotoPath);
-                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    Matrix matrix = new Matrix();
-                    switch (orientation) {
-                        case ExifInterface.ORIENTATION_ROTATE_90:
-                            matrix.postRotate(90);
-                            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                            break;
-                        case ExifInterface.ORIENTATION_ROTATE_180:
-                            matrix.postRotate(180);
-                            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                            break;
-                    }
-                    bitmapList.add(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
-
-
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-    private String getRealPathFromURI(Uri contentUri) {
-        String [] projection = {MediaStore.Images.Media.DATA};
-
-        CursorLoader cursorLoader = new CursorLoader(
-                getApplicationContext(),
-                contentUri,
-                projection,
-                null,   //selection
-                null,   //selectionArgs
-                null   //sortOrder
-        );
-
-        Cursor cursor = cursorLoader.loadInBackground();
-
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-
-        return cursor.getString(column_index);
     }
 
 }

@@ -167,12 +167,12 @@ public class Registration extends AppCompatActivity {
         String []tabNames = getResources().getStringArray(R.array.tabNames);
         TabHost.TabSpec spec1 = tabHost.newTabSpec("tab1");
         spec1.setContent(R.id.scroller1);
-        spec1.setIndicator(tabNames[0]);//"Mon", null);//res.getDrawable(R..drawable.tab_icon);
+        spec1.setIndicator(tabNames[0]);
         tabHost.addTab(spec1);
 
         TabHost.TabSpec spec2 = tabHost.newTabSpec("tab2");
         spec2.setContent(R.id.scroller2);
-        spec2.setIndicator(tabNames[1]);//"Mon", null);//res.getDrawable(R..drawable.tab_icon);
+        spec2.setIndicator(tabNames[1]);
         tabHost.addTab(spec2);
 
         tabHost.setCurrentTabByTag("tab1");
@@ -183,7 +183,6 @@ public class Registration extends AppCompatActivity {
                 Log.i("***Selected Tab", "Im currently in tab with index::" + tabHost.getCurrentTab());
             }
         });
-        //populateListView(tabHost,"");
     }
 
     private boolean isEmpty(EditText etText) {
@@ -233,8 +232,7 @@ public class Registration extends AppCompatActivity {
                 if (e == null) {//Sign up succeed
                     dlg.dismiss();
                     if (type.equals("Student")) {
-                        //Toast.makeText(ParseApplication.this, ParseUser.getCurrentUser().toString(), Toast.LENGTH_SHORT).show();
-                        registerStudent.put("StudentId", ParseUser.getCurrentUser());//act like a foreign key
+                        registerStudent.put("StudentId", ParseUser.getCurrentUser());
                         registerStudent.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
@@ -259,7 +257,6 @@ public class Registration extends AppCompatActivity {
                             }
                         });
                     } else if (type.equals("Owner")) {
-                        // Toast.makeText(ParseApplication.this, ParseUser.getCurrentUser().toString(), Toast.LENGTH_SHORT).show();
                         registerOwner.put("OwnerId", ParseUser.getCurrentUser());//act like a foreign key
                         registerOwner.saveInBackground(new SaveCallback() {
                             @Override

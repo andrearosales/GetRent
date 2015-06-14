@@ -27,9 +27,6 @@ import java.util.List;
 
 public class ListRent extends AppCompatActivity {
 
-    public static final String APPLICATION_ID = "qT7ozC6SpBUGiaKxHQwZHRyNfT0GX2xECCVsJYyv";
-    public static final String CLIENT_KEY = "jLWrQSMm4uC97tkzwPZLeJ3000GQS8cDm65uXQnc";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +120,6 @@ public class ListRent extends AppCompatActivity {
                         rent.setTags(tags);
                     }
                     if(p.get("Photos")!=null){
-                        //ArrayList<ParseFile> photos = (ArrayList<ParseFile>)p.get("Photos");
                         ParseFile photos = (ParseFile) p.get("Photos");
                         rent.setPhotos(photos);
                     }

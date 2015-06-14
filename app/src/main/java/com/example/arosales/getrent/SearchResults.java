@@ -69,7 +69,7 @@ public class SearchResults extends AppCompatActivity implements OnMapReadyCallba
 
         TabHost.TabSpec spec2 = tabHost.newTabSpec("tab2");
         spec2.setContent(R.id.tab2);
-        spec2.setIndicator(tabNames[1]);//"Mon", null);//res.getDrawable(R..drawable.tab_icon);
+        spec2.setIndicator(tabNames[1]);
         tabHost.addTab(spec2);
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -77,13 +77,11 @@ public class SearchResults extends AppCompatActivity implements OnMapReadyCallba
             public void onTabChanged(String arg0) {
                 Log.i("***Selected Tab", "Im currently in tab with index::" + tabHost.getCurrentTab());
                 if (tabHost.getCurrentTab() == 0) {
-                    //new RetrieveFromDatabase().execute(hash);
                     if(firstTab1) {
                         loadList();
                         firstTab1 =false;
                     }
                 } else {
-                    //new RetrieveFromDatabaseMap().execute(hash);
                     if(firstTab2) {
                         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.tab2);
                         mapFragment.getMapAsync(SearchResults.this);
@@ -364,7 +362,6 @@ public class SearchResults extends AppCompatActivity implements OnMapReadyCallba
 
     @Override
     public void onMapReady(GoogleMap map) {
-        //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         for(int i=0; i< list.size();i++){
             map.addMarker(new MarkerOptions()
                 .position(new LatLng(list.get(i).getPoint().getLatitude(), list.get(i).getPoint().getLongitude()))

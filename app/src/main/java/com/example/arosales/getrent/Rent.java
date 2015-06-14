@@ -12,17 +12,17 @@ import java.util.Date;
  */
 public class Rent implements Serializable{
 
-    String id;
-    String type;
-    String description;
-    String location;
-    ParseGeoPoint point;
-    Double cost;
-    Double size;
-    ArrayList<String> tags;
-    ParseFile photos;
-    boolean inadequate;
-    Date createdAt;
+    private String id;
+    private String type;
+    private String description;
+    private String location;
+    private ParseGeoPoint point;
+    private Double cost;
+    private Double size;
+    private ArrayList<String> tags;
+    private ParseFile photos;
+    private boolean inadequate;
+    private Date createdAt;
 
     public String getId() {
         return id;

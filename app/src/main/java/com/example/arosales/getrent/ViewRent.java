@@ -66,11 +66,8 @@ public class ViewRent extends AppCompatActivity {
 
     private ArrayAdapter<String> adapterType;
 
-    //private Rent receivedRent;
     private String rentId;
 
-    //private ArrayList<byte[]> photosBitmap;
-    //private List<ParseFile> photos;
     private boolean edit;
     private ImageView image;
     private Bitmap bitmap;
@@ -82,9 +79,7 @@ public class ViewRent extends AppCompatActivity {
         setContentView(R.layout.activity_view_rent);
 
         Intent intent = getIntent();
-        //receivedRent = (Rent) intent.getSerializableExtra(RentAdapter.RENT);
         rentId = (String) intent.getStringExtra(RentAdapter.RENT);
-        Log.d("RENTID", rentId);
 
         descriptionView = (EditText) findViewById(R.id.textDescription);
         locationView = (EditText) findViewById(R.id.textLocation);
@@ -122,11 +117,9 @@ public class ViewRent extends AppCompatActivity {
             uploadPhotos.setVisibility(View.GONE);
 
             ParseQuery rentQuery = new ParseQuery("Rent");
-            //rentQuery.include("OwnerId");
             rentQuery.whereEqualTo("objectId", rentId);
             try {
                 ParseObject receivedRent = rentQuery.getFirst();
-                //ParseObject receivedRent = rentQuery.get(rentId);
                 typeView.setSelection(adapterType.getPosition(receivedRent.getString("Type")));
                 if (receivedRent.getString("Description") != null)
                     descriptionView.setText(receivedRent.getString("Description"));
@@ -149,38 +142,27 @@ public class ViewRent extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            //typeView.setSelection(adapterType.getPosition(receivedRent.getType()));
             typeView.setFocusable(false);
             typeView.setFocusableInTouchMode(false);
             typeView.setClickable(false);
             typeView.setEnabled(false);
 
-        /*if (receivedRent.getDescription() != null) {
-            descriptionView.setText(receivedRent.getDescription());
-        }*/
             descriptionView.setFocusable(false);
             descriptionView.setFocusableInTouchMode(false);
             descriptionView.setClickable(false);
 
-            //locationView.setText(receivedRent.getLocation());
             locationView.setFocusable(false);
             locationView.setFocusableInTouchMode(false);
             locationView.setClickable(false);
 
-            //costView.setText(receivedRent.getCost().toString());
             costView.setFocusable(false);
             costView.setFocusableInTouchMode(false);
             costView.setClickable(false);
 
-            //sizeView.setText(receivedRent.getSize().toString());
             sizeView.setFocusable(false);
             sizeView.setFocusableInTouchMode(false);
             sizeView.setClickable(false);
 
-        /*if (receivedRent.getTags() != null){
-            if(receivedRent.getTags().size()>0)
-                tagsView.setText(receivedRent.getTags().toString().substring(1, receivedRent.getTags().toString().length() - 1));
-        }*/
             tagsView.setFocusable(false);
             tagsView.setFocusableInTouchMode(false);
             tagsView.setClickable(false);
@@ -386,7 +368,6 @@ public class ViewRent extends AppCompatActivity {
 
         ParseQuery rentQuery = new ParseQuery("Rent");
         rentQuery.include("OwnerId");
-        //rentQuery.whereEqualTo("objectId", receivedRent.getId());
         rentQuery.whereEqualTo("objectId", rentId);
         try {
             ParseObject resultRent = rentQuery.getFirst();
@@ -441,14 +422,6 @@ public class ViewRent extends AppCompatActivity {
                 resultRent.remove("Tags");
 
             if(bitmap!=null) {
-                /*String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName = "JPEG_" + timeStamp + "_";
-                File storageDir = Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES);
-                File image = File.createTempFile(imageFileName,".jpg",storageDir);
-
-                // Save a file: path for use with ACTION_VIEW intents
-                path = "file:" + image.getAbsolutePath();*/
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
@@ -466,7 +439,6 @@ public class ViewRent extends AppCompatActivity {
                     dlg.dismiss();
                     edit = false;
                     Intent intent = new Intent(ViewRent.this, ViewRent.class);
-                    //intent.putExtra(RentAdapter.RENT, receivedRent.getId());
                     intent.putExtra(RentAdapter.RENT, rentId);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -482,12 +454,6 @@ public class ViewRent extends AppCompatActivity {
     public void deleteRent(View view) {
 
         try {
-            //
-                /*Parse.initialize(this, "H9NFC1K9LmahxGcCrMOdT0qMaE0lDGT6BgbrSOAc", "4K2VfxRGIyk69KlQJ2B8NMnD71llrlkEPLdTNh9M");
-                ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.whereEqualTo("objectId", "2AM7fmxH5Sk");
-                ParseUser user = query.getFirst();*/
-            //
 
             ParseQuery<ParseObject> queryrent = ParseQuery.getQuery("Rent");
             queryrent.include("OwnerId");
@@ -521,10 +487,8 @@ public class ViewRent extends AppCompatActivity {
     }
 
     public void uploadPhotos(View view) {
-        //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //intent.setType("image/*");
-        //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_IMAGE_GET);
         }
@@ -533,9 +497,6 @@ public class ViewRent extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK){
-            //paths = new ArrayList<>();
-            //photosBitmap = new ArrayList<>();
-            //bitmapList = new ArrayList<>();
             if(data.getData() != null){
                 Uri selectedImage = data.getData();
 
@@ -549,12 +510,6 @@ public class ViewRent extends AppCompatActivity {
                 path = cursor.getString(columnIndex);
                 cursor.close();
 
-                //String path = getRealPathFromURI(selectedImage);
-                /*
-                if(path==null)
-                    path=selectedImage.getPath();
-                paths.add(path);*/
-                Log.d("Selected image ", "Only one selected image");
                 final int THUMBNAIL_SIZE = 64;
 
                 try {
@@ -562,10 +517,6 @@ public class ViewRent extends AppCompatActivity {
                     bitmap = BitmapFactory.decodeStream(is);
                     is.close();
                     bitmap = Bitmap.createScaledBitmap(bitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
-
-                    ExifInterface exif = new ExifInterface(path);
-                    //byte[] imageData = exif.getThumbnail();
-                    //bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
 
                     ExifInterface ei = new ExifInterface(path);
                     int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
@@ -581,12 +532,6 @@ public class ViewRent extends AppCompatActivity {
                             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                             break;
                     }
-
-
-                    //ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    //bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos);
-                    //byte[] imageData = baos.toByteArray();
-                    //photosBitmap.add(imageData);
                     image = (ImageView) findViewById(R.id.rentImage);
                     image.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {

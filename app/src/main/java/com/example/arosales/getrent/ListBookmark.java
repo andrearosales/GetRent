@@ -27,9 +27,6 @@ import java.util.List;
 
 public class ListBookmark extends AppCompatActivity {
 
-    public static final String APPLICATION_ID = "qT7ozC6SpBUGiaKxHQwZHRyNfT0GX2xECCVsJYyv";
-    public static final String CLIENT_KEY = "jLWrQSMm4uC97tkzwPZLeJ3000GQS8cDm65uXQnc";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +102,6 @@ public class ListBookmark extends AppCompatActivity {
             query.include("StudentId");
             query.include("RentId");
             query.whereEqualTo("StudentId", params[0]);
-            //query.whereEqualTo("Inadequate", false);
             try {
                 List<ParseObject> results=query.find();
                 for(ParseObject p:results){
@@ -127,7 +123,6 @@ public class ListBookmark extends AppCompatActivity {
                             rent.setTags(tags);
                         }
                         if (resultRent.get("Photos") != null) {
-                            //ArrayList<ParseFile> photos = (ArrayList<ParseFile>)p.get("Photos");
                             ParseFile photos = (ParseFile) resultRent.get("Photos");
                             rent.setPhotos(photos);
                         }

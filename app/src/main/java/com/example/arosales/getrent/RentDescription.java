@@ -94,7 +94,6 @@ public class RentDescription extends ActionBarActivity {
                 SpannableString content = new SpannableString(owner.getString("Email").toString());
                 content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                 emailOwner.setText(content);
-                //emailOwner.setText(owner.getString("Email").toString());
             }
 
         } catch (ParseException e) {
@@ -222,7 +221,6 @@ public class RentDescription extends ActionBarActivity {
         if(email.getText()!=null) {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:" + email.getText().toString()));
-            //intent.putExtra(Intent.EXTRA_EMAIL, email.getText().toString());
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
