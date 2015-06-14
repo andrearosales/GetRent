@@ -85,18 +85,6 @@
             android:label="@string/title_activity_view_rent"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
-        <activity
-            android:name=".TabList"
-            android:label="@string/title_activity_tab_list" >
-        </activity>
-        <activity
-            android:name=".TabMap"
-            android:label="@string/title_activity_tab_map" >
-        </activity>
-        <activity
-            android:name=".TestMap"
-            android:label="@string/title_activity_test_map" >
-        </activity>
     </application>
 
 </manifest>

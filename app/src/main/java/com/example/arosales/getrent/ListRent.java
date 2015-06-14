@@ -112,6 +112,8 @@ public class ListRent extends AppCompatActivity {
                     rent.setType(p.getString("Type"));
                     if(p.getString("Description")!=null)
                         rent.setDescription(p.getString("Description"));
+                    else
+                        rent.setDescription(null);
                     rent.setLocation(p.getString("Location"));
                     rent.setPoint(p.getParseGeoPoint("Point"));
                     rent.setCost(p.getDouble("Cost"));
@@ -126,6 +128,7 @@ public class ListRent extends AppCompatActivity {
                         rent.setPhotos(photos);
                     }
                     rent.setInadequate(p.getBoolean("Inadequate"));
+                    rent.setCreatedAt(p.getCreatedAt());
                     result_rents.add(rent);
                 }
             } catch (ParseException e) {

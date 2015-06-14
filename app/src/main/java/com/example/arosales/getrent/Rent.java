@@ -5,6 +5,7 @@ import com.parse.ParseGeoPoint;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Andrea Rosales on 11/06/2015.
@@ -21,6 +22,7 @@ public class Rent implements Serializable{
     ArrayList<String> tags;
     ParseFile photos;
     boolean inadequate;
+    Date createdAt;
 
     public String getId() {
         return id;
@@ -100,5 +102,13 @@ public class Rent implements Serializable{
 
     public void setInadequate(boolean inadequate) {
         this.inadequate = inadequate;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

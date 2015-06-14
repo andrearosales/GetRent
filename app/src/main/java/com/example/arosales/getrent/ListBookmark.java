@@ -116,6 +116,8 @@ public class ListBookmark extends AppCompatActivity {
                         rent.setType(resultRent.getString("Type"));
                         if (resultRent.getString("Description") != null)
                             rent.setDescription(resultRent.getString("Description"));
+                        else
+                            rent.setDescription(null);
                         rent.setLocation(resultRent.getString("Location"));
                         rent.setPoint(resultRent.getParseGeoPoint("Point"));
                         rent.setCost(resultRent.getDouble("Cost"));
@@ -130,6 +132,7 @@ public class ListBookmark extends AppCompatActivity {
                             rent.setPhotos(photos);
                         }
                         rent.setInadequate(resultRent.getBoolean("Inadequate"));
+                        rent.setCreatedAt(resultRent.getCreatedAt());
                         result_rents.add(rent);
                     }
                 }

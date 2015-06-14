@@ -17,8 +17,11 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
@@ -39,10 +42,7 @@ import java.util.List;
 
 public class SearchResults extends AppCompatActivity {
 
-    private RentAdapter rAdapter;
-
     private TabHost tabHost;
-    public ArrayList<Rent> listRents;
     public static HashMap<String, String> hash;
 
     @Override
@@ -59,16 +59,11 @@ public class SearchResults extends AppCompatActivity {
 
         String []tabNames = getResources().getStringArray(R.array.tabSearchNames);
         TabHost.TabSpec spec1 = tabHost.newTabSpec("tab1");
-        Intent intentTab1;
-        //intentTab1 = new Intent().setClass(this, TabList.class);
         spec1.setContent(R.id.tab1);
         spec1.setIndicator(tabNames[0]);
         tabHost.addTab(spec1);
 
         TabHost.TabSpec spec2 = tabHost.newTabSpec("tab2");
-        Intent intentTab2;
-        intentTab2 = new Intent().setClass(this, TabMap.class);
-        //spec1.setContent(intentTab2);
         spec2.setContent(R.id.tab2);
         spec2.setIndicator(tabNames[1]);//"Mon", null);//res.getDrawable(R..drawable.tab_icon);
         tabHost.addTab(spec2);
@@ -77,10 +72,9 @@ public class SearchResults extends AppCompatActivity {
             @Override
             public void onTabChanged(String arg0) {
                 Log.i("***Selected Tab", "Im currently in tab with index::" + tabHost.getCurrentTab());
-                if(tabHost.getCurrentTab()==0){
+                if (tabHost.getCurrentTab() == 0) {
                     new RetrieveFromDatabase().execute(hash);
-                }
-                else {
+                } else {
 
                 }
             }
@@ -208,6 +202,7 @@ public class SearchResults extends AppCompatActivity {
                                 toSave.setPhotos(photos);
                             }
                             toSave.setInadequate(parseRent.getBoolean("Inadequate"));
+                            toSave.setCreatedAt(parseRent.getCreatedAt());
                             rents.add(toSave);
                         }
                         else{
@@ -230,6 +225,7 @@ public class SearchResults extends AppCompatActivity {
                                             toSave.setPhotos(photos);
                                         }
                                         toSave.setInadequate(parseRent.getBoolean("Inadequate"));
+                                        toSave.setCreatedAt(parseRent.getCreatedAt());
                                         rents.add(toSave);
                                     }
                                 }
@@ -242,6 +238,8 @@ public class SearchResults extends AppCompatActivity {
                         toSave.setType(parseRent.getString("Type"));
                         if(parseRent.getString("Description")!=null)
                             toSave.setDescription(parseRent.getString("Description"));
+                        else
+                            toSave.setDescription(null);
                         toSave.setLocation(parseRent.getString("Location"));
                         toSave.setPoint(parseRent.getParseGeoPoint("Point"));
                         toSave.setCost(parseRent.getDouble("Cost"));
@@ -255,6 +253,7 @@ public class SearchResults extends AppCompatActivity {
                             toSave.setPhotos(photos);
                         }
                         toSave.setInadequate(parseRent.getBoolean("Inadequate"));
+                        toSave.setCreatedAt(parseRent.getCreatedAt());
                         rents.add(toSave);
                     }
 
@@ -273,7 +272,7 @@ public class SearchResults extends AppCompatActivity {
                 progressDialog.dismiss();
             }
 
-            RentAdapter rAdapter = new RentAdapter(SearchResults.this, rents, "Search");
+            final RentAdapter rAdapter = new RentAdapter(SearchResults.this, rents, "Search");
 
             ListView list_rents = (ListView) findViewById(R.id.listResult);
 
@@ -297,12 +296,48 @@ public class SearchResults extends AppCompatActivity {
             newSearchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent= new Intent(SearchResults.this,SearchRents.class);
+                    Intent intent = new Intent(SearchResults.this, SearchRents.class);
                     startActivity(intent);
                 }
             });
 
             list_rents.addFooterView(newSearchButton);
+
+            Spinner sort = new Spinner(SearchResults.this);
+            ArrayAdapter<String> adapterSort = new ArrayAdapter<String>(SearchResults.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.arraySort));
+            adapterSort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sort.setAdapter(adapterSort);
+
+            sort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if(position==1){
+                        rAdapter.sortPriceMinMax();
+                    }
+                    else if(position==2){
+                        rAdapter.sortPriceMaxMin();
+                    }
+                    else if(position==3){
+                        rAdapter.sortSizeMinMax();
+                    }
+                    else if(position==4){
+                        rAdapter.sortSizeMaxMin();
+                    }
+                    else if(position==5){
+                        rAdapter.sortDateNewOld();
+                    }
+                    else if(position==6){
+                        rAdapter.sortDateOldNew();
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            list_rents.addHeaderView(sort);
 
             list_rents.setAdapter(rAdapter);
             list_rents.setEmptyView(findViewById(R.id.emptyView));
@@ -310,4 +345,5 @@ public class SearchResults extends AppCompatActivity {
 
         }
     }
+
 }

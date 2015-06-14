@@ -13,7 +13,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 /**
  * Created by Andrea Rosales on 13/06/2015.
  */
-public class SearchMapFragment extends SupportMapFragment {
+public class ResultsMapFragment extends SupportMapFragment {
 
     private OnTouchListener mListener;
 
