@@ -93,7 +93,7 @@ public class ViewRent extends AppCompatActivity {
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeView.setAdapter(adapterType);
 
-        if(edit){
+        /*if(edit){
             Button saveButton = (Button) findViewById(R.id.saveButton);
             saveButton.setVisibility(View.VISIBLE);
             saveButton.setClickable(true);
@@ -109,8 +109,8 @@ public class ViewRent extends AppCompatActivity {
             Button editButton= (Button) findViewById(R.id.editButton);
             editButton.setVisibility(View.GONE);
 
-        }
-        else {
+        }*/
+        //else {
             Button saveButton = (Button) findViewById(R.id.saveButton);
             saveButton.setVisibility(View.GONE);
             TextView uploadPhotos = (TextView) findViewById(R.id.rentAddPhotos);
@@ -166,7 +166,7 @@ public class ViewRent extends AppCompatActivity {
             tagsView.setFocusable(false);
             tagsView.setFocusableInTouchMode(false);
             tagsView.setClickable(false);
-        }
+        //}
 
     }
 
@@ -189,9 +189,7 @@ public class ViewRent extends AppCompatActivity {
         outState.putString(SIZE, sizeView.getText().toString());
         outState.putString(TAGS, tagsView.getText().toString());
 
-        if(edit) {
-            outState.putBoolean(EDIT, true);
-        }
+        outState.putBoolean(EDIT, edit);
 
         if(bitmap!=null){
             outState.putParcelable(PHOTO, bitmap);
@@ -211,7 +209,7 @@ public class ViewRent extends AppCompatActivity {
         EditText location = (EditText) findViewById(R.id.textLocation);
         EditText cost = (EditText) findViewById(R.id.textCost);
         EditText size = (EditText) findViewById(R.id.textSize);
-        EditText tags = (EditText) findViewById(R.id.textTags);
+        EditText tagsView = (EditText) findViewById(R.id.textTags);
 
         if(savedInstanceState.containsKey(TYPE)) {
             type.setSelection(adapterType.getPosition(savedInstanceState.getString(TYPE)));
@@ -220,12 +218,108 @@ public class ViewRent extends AppCompatActivity {
         location.setText(savedInstanceState.getString(LOCATION));
         cost.setText(savedInstanceState.getString(COST));
         size.setText(savedInstanceState.getString(SIZE));
-        tags.setText(savedInstanceState.getString(TAGS));
+        tagsView.setText(savedInstanceState.getString(TAGS));
 
-        if(savedInstanceState.containsKey(EDIT))
-            edit=true;
-        else
-            edit = false;
+        if(savedInstanceState.getBoolean(EDIT)) {
+            Button editButton= (Button) findViewById(R.id.editButton);
+            editButton.setVisibility(View.GONE);
+
+            Button saveButton = (Button) findViewById(R.id.saveButton);
+            saveButton.setClickable(true);
+            saveButton.setFocusable(true);
+            saveButton.setFocusableInTouchMode(true);
+            saveButton.setVisibility(View.VISIBLE);
+
+            TextView uploadPhotos = (TextView) findViewById(R.id.rentAddPhotos);
+            uploadPhotos.setClickable(true);
+            uploadPhotos.setFocusable(true);
+            uploadPhotos.setFocusableInTouchMode(true);
+            uploadPhotos.setVisibility(View.VISIBLE);
+
+            edit = true;
+
+            typeView.setFocusable(true);
+            typeView.setFocusableInTouchMode(true);
+            typeView.setClickable(true);
+            typeView.setEnabled(true);
+
+            descriptionView.setFocusable(true);
+            descriptionView.setFocusableInTouchMode(true);
+            descriptionView.setClickable(true);
+
+            locationView.setFocusable(true);
+            locationView.setFocusableInTouchMode(true);
+            locationView.setClickable(true);
+
+            costView.setFocusable(true);
+            costView.setFocusableInTouchMode(true);
+            costView.setClickable(true);
+
+            sizeView.setFocusable(true);
+            sizeView.setFocusableInTouchMode(true);
+            sizeView.setClickable(true);
+
+            this.tagsView.setFocusable(true);
+            this.tagsView.setFocusableInTouchMode(true);
+            this.tagsView.setClickable(true);
+        }
+        else {
+            Button saveButton = (Button) findViewById(R.id.saveButton);
+            saveButton.setVisibility(View.GONE);
+            TextView uploadPhotos = (TextView) findViewById(R.id.rentAddPhotos);
+            uploadPhotos.setVisibility(View.GONE);
+
+            ParseQuery rentQuery = new ParseQuery("Rent");
+            rentQuery.whereEqualTo("objectId", rentId);
+            try {
+                ParseObject receivedRent = rentQuery.getFirst();
+                typeView.setSelection(adapterType.getPosition(receivedRent.getString("Type")));
+                if (receivedRent.getString("Description") != null)
+                    descriptionView.setText(receivedRent.getString("Description"));
+                locationView.setText(receivedRent.getString("Location"));
+                costView.setText(receivedRent.getNumber("Cost").toString());
+                sizeView.setText(receivedRent.getNumber("Size").toString());
+                if (receivedRent.get("Tags") != null) {
+                    ArrayList<String> tags = (ArrayList<String>) receivedRent.get("Tags");
+                    if(tags.size()>0)
+                        this.tagsView.setText(tags.toString().substring(1, tags.toString().length() - 1));
+                }
+                if(receivedRent.get("Photos")!=null){
+                    ParseFile photo = receivedRent.getParseFile("Photos");
+                    bitmap = BitmapFactory.decodeByteArray(photo.getData(), 0, photo.getData().length);;
+                    image = (ImageView) findViewById(R.id.rentImage);
+                    image.setImageBitmap(bitmap);
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            typeView.setFocusable(false);
+            typeView.setFocusableInTouchMode(false);
+            typeView.setClickable(false);
+            typeView.setEnabled(false);
+
+            descriptionView.setFocusable(false);
+            descriptionView.setFocusableInTouchMode(false);
+            descriptionView.setClickable(false);
+
+            locationView.setFocusable(false);
+            locationView.setFocusableInTouchMode(false);
+            locationView.setClickable(false);
+
+            costView.setFocusable(false);
+            costView.setFocusableInTouchMode(false);
+            costView.setClickable(false);
+
+            sizeView.setFocusable(false);
+            sizeView.setFocusableInTouchMode(false);
+            sizeView.setClickable(false);
+
+            this.tagsView.setFocusable(false);
+            this.tagsView.setFocusableInTouchMode(false);
+            this.tagsView.setClickable(false);
+        }
 
         if(savedInstanceState.containsKey(PHOTO)){
             bitmap = savedInstanceState.getParcelable(PHOTO);
