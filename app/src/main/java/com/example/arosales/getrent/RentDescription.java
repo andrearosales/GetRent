@@ -77,7 +77,7 @@ public class RentDescription extends ActionBarActivity {
             }
             if(receivedRent.get("Photos")!=null){
                 ParseFile photo = receivedRent.getParseFile("Photos");
-                Bitmap bitmap = BitmapFactory.decodeByteArray(photo.getData(), 0, photo.getData().length);;
+                Bitmap bitmap = BitmapFactory.decodeByteArray(photo.getData(), 0, photo.getData().length);
                 image = (ImageView) findViewById(R.id.rentImage);
                 image.setImageBitmap(bitmap);
             }
