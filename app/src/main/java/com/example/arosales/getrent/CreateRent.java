@@ -327,7 +327,7 @@ public class CreateRent extends AppCompatActivity {
                 path = cursor.getString(columnIndex);
                 cursor.close();
                 Log.d("Selected image ", "Only one selected image");
-                final int THUMBNAIL_SIZE = 64;
+                final int THUMBNAIL_SIZE = 200;
 
                 try {
                     InputStream is = getContentResolver().openInputStream(selectedImage);

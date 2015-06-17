@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -364,11 +365,11 @@ public class SearchResults extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap map) {
         for(int i=0; i< list.size();i++){
             map.addMarker(new MarkerOptions()
-                .position(new LatLng(list.get(i).getPoint().getLatitude(), list.get(i).getPoint().getLongitude()))
-                .title(list.get(i).getType())
-                .snippet("Price: "+ list.get(i).getCost()+"\nSize (m2): "+ list.get(i).getSize()));
-
+                    .position(new LatLng(list.get(i).getPoint().getLatitude(), list.get(i).getPoint().getLongitude()))
+                    .title(list.get(i).getType())
+                    .snippet("Price: " + list.get(i).getCost() + "\nSize (m2): " + list.get(i).getSize()));
         }
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(list.get(0).getPoint().getLatitude(), list.get(0).getPoint().getLongitude()), 10));
     }
 
     public void loadList(){
